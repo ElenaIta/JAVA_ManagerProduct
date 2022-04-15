@@ -5,15 +5,12 @@ import org.junit.jupiter.api.Test;
 import ru.netology.Domain.Book;
 import ru.netology.Domain.Product;
 import ru.netology.Domain.Smartphone;
-import ru.netology.Domain.repository.ProductRepository;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ProductManagerTest {
 
-    ProductRepository repository = new ProductRepository();
     ProductManager manager = new ProductManager();
 
     Product first = new Book(1, "Angels and Demons", 2000, "Dan Brown");
@@ -30,34 +27,50 @@ class ProductManagerTest {
     }
 
     @Test
+    public void add() {
+        Product[] expected = new Product[] {first, second, third, fourth};
+        Product[] actual = manager.getAll();
+        assertArrayEquals(expected, actual);
+    }
+
+
+    @Test
     public void shouldSearchByNameBook() {
         Product[] expected = {second};
         Product[] actual = manager.searchBy("Faust");
-
-        System.out.println(Arrays.toString(actual));
-
         assertArrayEquals(expected, actual);
     }
 
     @Test
     void shouldSearchByNoName() {
-
-        Product[] actual = manager.searchBy("WOW");
         Product[] expected = new Product[0];
-
-        System.out.println(Arrays.toString(actual));
-        
+        Product[] actual = manager.searchBy("WOW");
         assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void shouldSearchBymanufacturer() {
+        Product[] expected = {fourth};
+        Product[] actual = manager.searchBy("Gold");
+        assertArrayEquals(expected, actual);
+    }
 
     @Test
-    public void shouldSearchByNameAuthor() {
-        Product[] expected = {first};
-        Product[] actual = manager.searchBy("Dan Brown");
-
-        System.out.println(Arrays.toString(actual));
-
+    public void shouldNotFindAuthor() {
+        Product[] expected = new Product[0];
+        Product[] actual = manager.searchBy("Goethe");
         assertArrayEquals(expected, actual);
+    }
+
+     @Test
+    public void matchesTrue() {
+        manager.searchBy("Angels and Demons");
+        assertTrue(manager.matches(first, "Angels and Demons"));
+    }
+
+    @Test
+    public void matchesFalse() {
+        manager.searchBy("WOW");
+        assertTrue(manager.matches(first, "Angels and Demons"));
     }
 }

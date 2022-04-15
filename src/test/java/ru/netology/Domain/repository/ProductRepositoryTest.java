@@ -6,9 +6,7 @@ import ru.netology.Domain.Book;
 import ru.netology.Domain.Product;
 import ru.netology.Domain.Smartphone;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ProductRepositoryTest {
     ProductRepository repository = new ProductRepository();
@@ -29,17 +27,16 @@ class ProductRepositoryTest {
 
     @Test
     public void shouldSaveAll() {
+
         Product[] expected = {first, second, third, fourth};
         Product[] actual = repository.findAll();
-
-        System.out.println(Arrays.toString(actual));
-
         assertArrayEquals(expected, actual);
     }
 
 
     @Test
     public void shouldRemoveById() {
+
         repository.removeById(4);
         Product[] expected = {first, second, third};
         Product[] actual = repository.findAll();
@@ -48,6 +45,7 @@ class ProductRepositoryTest {
 
     @Test
     public void shouldFindAll() {
+
         repository.findAll();
         Product[] expected = {first, second, third, fourth};
         Product[] actual = repository.findAll();
@@ -56,12 +54,10 @@ class ProductRepositoryTest {
 
     @Test
     public void findById() {
+
         repository.findById(2);
         Product[] expected = {second};
         Product[] actual = {second};
-
-        System.out.println(Arrays.toString(actual));
-
         assertArrayEquals(expected, actual);
     }
 
@@ -70,9 +66,6 @@ class ProductRepositoryTest {
         repository.findById(5);
         Product[] expected = null;
         Product[] actual = null;
-
-        System.out.println(Arrays.toString(actual));
-
         assertArrayEquals(expected, actual);
     }
 }

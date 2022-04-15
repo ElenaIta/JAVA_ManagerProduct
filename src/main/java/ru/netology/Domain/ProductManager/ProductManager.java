@@ -7,10 +7,6 @@ public class ProductManager {
 
     private ProductRepository repository = new ProductRepository();
 
-//    public ProductManager(ProductRepository repository) {
-//        this.repository = repository;
-//    }
-
     // // добавление элементов
     public void add(Product product) {
         repository.save(product);
